@@ -1,0 +1,95 @@
+﻿# BRIM AI TUTOR SECURITY
+
+## 🔒 Comprehensive Security Testing Suite
+
+This repository contains all security testing tools for BRIM AI Tutor application.
+
+### 📁 Structure
+- **security-tests/** - Core security validation scripts
+- **attack-simulations/** - Attack demonstration scripts
+- **test-results/** - Test execution results
+- **documentation/** - Security findings and fixes
+
+### 🚨 Critical Vulnerabilities Detected
+
+1. **JWT Secret: WEAK** (Critical)
+2. **API Rate Limiting: MISSING** (High)
+3. **Token Lifetime: 24 HOURS** (High)
+
+### 🚀 Quick Test
+```powershell
+cd attack-simulations
+.\Quick-JWT-Attack.ps1
+# From your terminal in VS Code (assuming you're in the BRIM_AI_TUTOR_SECURITY folder)
+
+# 1. Save the README.md file (Ctrl+S in VS Code)
+
+# 2. Create the directory structure
+mkdir security-tests, attack-simulations, test-results, documentation -Force
+
+# 3. Copy your PowerShell scripts to the correct folders
+# Security tests
+Move-Item "Proper-Security-Test.ps1", "OAuth-JWT-Security-Test.ps1" -Destination "security-tests\" -Force
+
+# Attack simulations
+Move-Item "OAuth-JWT-BruteForce-Attack.ps1", "JWT-Token-Attack.ps1", "Quick-JWT-Attack.ps1" -Destination "attack-simulations\" -Force
+
+# 4. Copy test results if you have them
+Copy-Item "E:\End to End testing\brim-ai-e2e-tests\e2e-tests\AI-Tutor-LoadTest-Result*.json" -Destination "test-results\" -ErrorAction SilentlyContinue
+
+# 5. Create documentation files
+cd documentation
+
+# Create Security Fixes Guide
+@"
+# Security Fixes for BRIM AI Tutor
+
+## Critical Fix: JWT Secret
+
+### Current Issue
+JWT secret is weak and can be cracked in seconds.
+
+### Solution
+\\\javascript
+// backend/.env
+JWT_SECRET=9b21e01fb17b224074acf8aa206525b6128d7903f02da4113d4f416655cfee3f
+\\\
+
+## High Priority: API Rate Limiting
+
+### Install
+\\\ash
+npm install express-rate-limit
+\\\
+
+### Implement
+\\\javascript
+const rateLimit = require('express-rate-limit');
+
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 100 // 100 requests
+});
+
+app.use('/api/', apiLimiter);
+\\\
+"@ | Out-File -FilePath SECURITY-FIXES.md -Encoding UTF8
+
+# 6. Go back to root
+cd ..
+
+# 7. Create .gitignore
+@"
+# Test outputs
+*.log
+*.tmp
+temp/
+
+# Sensitive data
+captured-tokens.txt
+credentials.txt
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
